@@ -5,50 +5,33 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+. "$HOME/.cargo/env"
 
-export PATH="$HOME/.cargo/bin:$PATH"
+# exec awesome
 
-export PATH="/Users/kevinbnaughton/.local/share/solana/install/active_release/bin/solana:$PATH"
+# Created by `pipx` on 2024-04-24 23:03:10
+export PATH="$PATH:$HOME/.local/bin"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="$PATH:$HOME/.foundry/bin"
 
-# For Homebrew https://stackoverflow.com/questions/5157678/how-do-i-use-brew-installed-python-as-the-default-python
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kevinbnaughton/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kevinbnaughton/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/kevinbnaughton/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kevinbnaughton/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-bindkey -e
-bindkey '^[[1;9C' forward-word
-bindkey '^[[1;9D' backward-word
 
 alias t="tmux -CC attach"
 alias tmuxa='tmux -CC attach'
-
-function git_sparse_clone() (
-  rurl="$1" localdir="$2" && shift 2
-
-  mkdir -p "$localdir"
-  cd "$localdir"
-
-  git init
-  git remote add -f origin "$rurl"
-
-  git config core.sparseCheckout true
-
-  # Loops over remaining args
-  for i; do
-    echo "$i" >> .git/info/sparse-checkout
-  done
-
-  git pull origin master
-)
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -136,11 +119,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Created by `pipx` on 2024-11-01 16:26:28
-export PATH="$PATH:/Users/kevinbnaughton/.local/bin"
-
 eval "$(zoxide init zsh)"
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

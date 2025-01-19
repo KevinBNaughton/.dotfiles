@@ -1,4 +1,4 @@
-# KevinBNaughton dotfiles!
+# KevinBNaughton dotfiles
 
 ## Summary
 
@@ -9,7 +9,8 @@ Here are my dotfiles. To start, it will be my following configs:
 - neovim
 - ghostty
 
-I will try to update this README for what packages need to be installed for them all to work.
+I will try to update this README for what packages need to be installed for
+them all to work.
 
 ## Install Packages
 
@@ -17,13 +18,21 @@ I will try to update this README for what packages need to be installed for them
 
 Follow the README in `.config/nvim/README.md`.
 
+Also install 'pokemon-colorscripts'
+
 ### Ghostty
 
 Follow the ghostty GitHub docs
 
 ### zsh
 
-TODO - Update this with packages needed for zsh, ohmyzsh, and Powershell10k
+Download and start zsh. Will fail first time on a new machine.
+
+For a new machine, 'mv $HOME/.zshrc $HOME/.zshrc_backup'
+
+Then download and configure ohmyzsh, p10k.
+
+Then get the changes and updates from 'dotfiles checkout' below.
 
 ### Others
 
@@ -31,7 +40,9 @@ TODO - Update this with packages I use like `z`.
 
 ## Summary of Medium Article
 
-Here is my summary of commands that the [medium article](https://medium.com/@simontoth/best-way-to-manage-your-dotfiles-2c45bb280049) suggests!
+Here is my summary of commands that the
+[Medium article](https://medium.com/@simontoth/best-way-to-manage-your-dotfiles-2c45bb280049)
+suggests!
 
 ### First Time Setup
 
