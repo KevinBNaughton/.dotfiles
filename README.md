@@ -24,7 +24,7 @@ Also install 'pokemon-colorscripts'
 
 Follow the ghostty GitHub docs
 
-### zsh
+### zsh, oh-my-zsh, p10k
 
 Download and start zsh. Will fail first time on a new machine.
 
@@ -32,7 +32,17 @@ For a new machine, 'mv $HOME/.zshrc $HOME/.zshrc_backup'
 
 Then download and configure ohmyzsh, p10k.
 
+Make sure to install p10k like this:
+
+```shell
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
 Then get the changes and updates from 'dotfiles checkout' below.
+
+### zeoxide
+
+Install [zeoxide here](https://github.com/ajeetdsouza/zoxide)
 
 ### Others
 
