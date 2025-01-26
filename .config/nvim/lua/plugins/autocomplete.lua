@@ -3,6 +3,7 @@ return {
   dependencies = {
     {
       'L3MON4D3/LuaSnip',
+      version = 'v2.*',
       build = (function()
         -- Build Step is needed for regex support in snippets.
         -- This step is not supported in many windows environments.
@@ -12,17 +13,6 @@ return {
         end
         return 'make install_jsregexp'
       end)(),
-      dependencies = {
-        -- `friendly-snippets` contains a variety of premade snippets.
-        -- See the README about individual language/framework/plugin snippets:
-        --    https://github.com/rafamadriz/friendly-snippets
-        {
-          'rafamadriz/friendly-snippets',
-          config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-          end,
-        },
-      },
     },
   },
   version = '*',
@@ -34,10 +24,6 @@ return {
         -- 'full' will fuzzy match on the text before *and* after the cursor
         -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
         range = 'prefix',
-        -- Regex used to get the text when fuzzy matching
-        regex = '[-_]\\|\\k',
-        -- After matching with regex, any characters matching this regex at the prefix will be excluded
-        exclude_from_prefix_regex = '[\\-]',
       },
 
       trigger = {
@@ -81,7 +67,7 @@ return {
         max_items = 200,
         -- Controls if completion items will be selected automatically,
         -- and whether selection automatically inserts
-        selection = 'auto_insert',
+        selection = { preselect = true, auto_insert = true },
         -- selection = function(ctx) return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect' end,
         -- Controls how the completion items are selected
         -- 'preselect' will automatically select the first item in the completion list
@@ -263,18 +249,21 @@ return {
         enabled = false,
       },
     }
+    opts.snippets = {
+      preset = 'luasnip',
+    }
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not
     -- adding it here again
     opts.sources = vim.tbl_deep_extend('force', opts.sources or {}, {
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'luasnip' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
       --   TODO - Maybe integrate dadbod
       --   default = { 'dadbod' },
       providers = {
         lazydev = {
           name = 'LazyDev',
           module = 'lazydev.integrations.blink',
-          fallbacks = { 'lsp', 'snippets', 'luasnip', 'buffer' },
+          fallbacks = { 'lsp', 'snippets', 'buffer' },
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100, -- the higher the number, the higher the priority
         },
@@ -285,16 +274,8 @@ return {
           -- When linking markdown notes, I would get snippets and text in the
           -- suggestions, I want those to show only if there are no LSP
           -- suggestions
-          fallbacks = { 'snippets', 'luasnip', 'buffer' },
+          fallbacks = { 'snippets', 'buffer' },
           score_offset = 90, -- the higher the number, the higher the priority
-        },
-        luasnip = {
-          name = 'luasnip',
-          enabled = true,
-          module = 'blink.cmp.sources.luasnip',
-          min_keyword_length = 2,
-          fallbacks = { 'snippets' },
-          score_offset = 85, -- the higher the number, the higher the priority
         },
         -- TODO - Example on how to configure dadbod found in the main repo
         -- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -316,7 +297,7 @@ return {
           -- When typing a path, I would get snippets and text in the
           -- suggestions, I want those to show only if there are no path
           -- suggestions
-          fallbacks = { 'snippets', 'luasnip', 'buffer' },
+          fallbacks = { 'snippets', 'buffer' },
           opts = {
             trailing_slash = false,
             label_trailing_slash = true,
@@ -333,25 +314,6 @@ return {
         },
       },
     })
-
-    -- This comes from the luasnip extra, if you don't add it, won't be able to
-    -- jump forward or backward in luasnip snippets
-    -- https://www.lazyvim.org/extras/coding/luasnip#blinkcmp-optional
-    opts.snippets = {
-      expand = function(snippet)
-        require('luasnip').lsp_expand(snippet)
-      end,
-      active = function(filter)
-        if filter and filter.direction then
-          return require('luasnip').jumpable(filter.direction)
-        end
-        return require('luasnip').in_snippet()
-      end,
-      jump = function(direction)
-        require('luasnip').jump(direction)
-      end,
-    }
-
     -- The default preset used by lazyvim accepts completions with enter
     -- I don't like using enter because if on markdown and typing
     -- something, but you want to go to the line below, if you press enter,
