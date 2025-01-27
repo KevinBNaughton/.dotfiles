@@ -341,7 +341,6 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'tokyonight-night'
-
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -360,21 +359,18 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
-
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
       statusline.setup { use_icons = vim.g.have_nerd_font }
-
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
@@ -382,7 +378,6 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
@@ -422,6 +417,15 @@ require('lazy').setup({
     dependencies = 'nvzone/volt',
     opts = {},
     cmd = { 'Typr', 'TyprStats' },
+  },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    version = '*',
+    keys = {
+      { '<leader>nn', '<cmd>NoNeckPain<CR>', mode = { 'n' }, desc = 'Toggle NoNeckPain' },
+      { '<leader>nu', '<cmd>NoNeckPainWidthUp<CR>', mode = { 'n' }, desc = 'Increase width by 5' },
+      { '<leader>nd', '<cmd>NoNeckPainWidthDown<CR>', mode = { 'n' }, desc = 'Decrease width by 5' },
+    },
   },
 
   require 'plugins.debug',
